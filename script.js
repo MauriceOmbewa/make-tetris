@@ -11,7 +11,9 @@ const tetromino = [
 ]
 
 // console.log(arr);
-// RandomTetromino();
+// let num = RandomTetromino();
+// // StartPosition(num);
+console.log(tetromino[1].length)
 
 function RandomTetromino(){
     let num = 10;
@@ -20,4 +22,14 @@ function RandomTetromino(){
     }
     // console.log(num);
     return num;
+}
+
+function StartPosition(num, arr, tetromino){
+    const tetrominoShape = tetromino[num];
+
+    for (let row = 0; row < tetrominoShape.legth; row++){
+        for (column = 0; column < tetrominoShape[row].length; column++){
+            arr[row][3 + column] = tetrominoShape[row][column];
+        }
+    }
 }
