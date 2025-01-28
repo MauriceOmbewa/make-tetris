@@ -4,16 +4,26 @@ let arr = Array.from({length: length}, () => new Array(width).fill(0))
 const tetromino = [
     [[1,1,1]],//_
     [[0,0,1], [1,1,1]],//l
-    [[1,0,0], [1,1,1]],//j
+    [[1,0,0], [1,1,1]],//j orange
     [[1,1,0], [0,1,1]],//z
     [[0,1,1], [1,1,0]],//s
     [[0,1,0], [1,1,1]]//t
 ]
+const tetrominoColor = [
+    'red',
+    'blue',
+    'green',
+    'yellow',
+    'purple',
+    'orange'
+]
 
 // console.log(arr);
-// let num = RandomTetromino();
+let num = RandomTetromino();
+console.log(num)
 // // StartPosition(num);
-console.log(tetromino[1].length)
+// console.log(tetromino[num].length)
+console.log(Color(num))
 
 function RandomTetromino(){
     let num = 10;
@@ -32,4 +42,8 @@ function StartPosition(num, arr, tetromino){
             arr[row][3 + column] = tetrominoShape[row][column];
         }
     }
+}
+
+function Color(num){
+    return tetrominoColor[num];
 }
