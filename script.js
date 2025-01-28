@@ -55,7 +55,7 @@ function Color(num){
 
 // Movement(arr5, 'right')
 
-function  Movement(arr, direction){
+function  Movement(arr, direction, tetrominoShape){
     if (direction === 'left'){
         for (let row = 0; row < arr.length; row++){
             for (let index = 0; index < arr[row].length; index++){
@@ -76,9 +76,27 @@ function  Movement(arr, direction){
             }
         }
         console.log(arr)
+    } else if (direction === 'up'){
+        tetrominoShape = Rotation(tetrominoShape)
     }
 }
 
+// Rotation([ [ 1, 0 ], [ 1, 1 ], [ 1, 0 ] ])
+
+
+function Rotation(tetrominoShape) {
+    let column = tetrominoShape[0].length;
+    let finalarr = Array.from({length: column}, () => new Array(tetrominoShape.length).fill(0));
+
+    for (let i = 0; i < tetrominoShape.length; i++) {
+        for (let j = 0; j < column; j++) {
+            finalarr[j][tetrominoShape.length - 1 - i] = tetrominoShape[i][j];
+        }
+    }
+
+    console.log(finalarr);
+    return finalarr;
+}
 
 
 
