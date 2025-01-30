@@ -132,6 +132,16 @@ function MoveDown(grid){
     }
 }
 
+function StackTetromino(grid){
+    for (let r = 0; r < grid.length; r++){
+        for (let c = 0; c < grid[r].length; c++){
+            if (grid[r][c] == 1){
+                grid[r][c] = 2;
+            }
+        }
+    }
+}
+
 
 
 
