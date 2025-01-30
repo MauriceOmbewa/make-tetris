@@ -40,7 +40,7 @@ let grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 1]
 ]
 
 
@@ -100,9 +100,9 @@ function PlaceTetromino(grid, tetromino){
 }
 
 PlaceTetromino(grid, tetromino[1]);
-FallDown(grid);
+// FallDown(grid);
 // Movement(grid, 'left')
-console.log(grid);
+
 
 // let okay = true;
 
@@ -180,9 +180,28 @@ function CheckHorizontal(grid, direction){
     return true;
 }
 
+function CheckFullRows(grid, completeRows){
+    let num = 0;
+    for (r = grid.length-1; r >= 0; r--){
+        for (c = 0; c < grid[r].length; c++){
+            if (grid[r][c] !== 2){
+                break
+            } else if (grid[r][c] == 2){
+                num = num + 2;
+            }
+        }
+        if (num == 20){
+            completeRows.push(r);
+        }
+        num = 0;
+    }
+}
+let em = [];
+CheckFullRows(grid, em)
 
 
 
+// console.log(em);
 
 
 
