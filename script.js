@@ -111,7 +111,7 @@ function CheckDown(grid){
     for (let r = grid.length-1; r >= 0; r--){
         for (let c = 0; c < grid[r].length; c++){
             if (grid[r][c] == 1){
-                if (grid[r+1][c] == 2){
+                if (grid[r+1][c] == 2 || r+1 == grid.length){
                     // okay = false;
                     return false;
                 }
