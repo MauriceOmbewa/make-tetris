@@ -121,7 +121,16 @@ function CheckDown(grid){
     return true;
 }
 
-
+function MoveDown(grid){
+    for (let r = grid.length-1; r >= 0; r--){
+        for (let c = 0; c < grid.length; c++){
+            if (grid[r][c] == 1){
+                grid[r+1][c] = 1;
+                grid[r][c] = 0;
+            }
+        }
+    }
+}
 
 
 
