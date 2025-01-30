@@ -180,7 +180,24 @@ function CheckHorizontal(grid, direction){
     return true;
 }
 
-function CheckFullRows(grid, completeRows){
+// function CheckFullRows(grid, completeRows){
+//     let num = 0;
+//     for (r = grid.length-1; r >= 0; r--){
+//         for (c = 0; c < grid[r].length; c++){
+//             if (grid[r][c] !== 2){
+//                 break
+//             } else if (grid[r][c] == 2){
+//                 num = num + 2;
+//             }
+//         }
+//         if (num == 20){
+//             completeRows.push(r);
+//         }
+//         num = 0;
+//     }
+// }
+
+function CheckFullRows(grid){
     let num = 0;
     for (r = grid.length-1; r >= 0; r--){
         for (c = 0; c < grid[r].length; c++){
@@ -191,19 +208,18 @@ function CheckFullRows(grid, completeRows){
             }
         }
         if (num == 20){
-            completeRows.push(r);
+            return r;
         }
-        num = 0;
     }
+    return 'none';
 }
-let em = [];
-CheckFullRows(grid, em)
 
+function RemoveRows(grid, completeRowIndex){
+    grid.splice(completeRowIndex, 1);
+    grid.unshift(new Array(10).fill(0));
+}
 
-
-// console.log(em);
-
-
+console.log(CheckFullRows(grid))
 
 
 
