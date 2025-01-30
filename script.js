@@ -99,28 +99,29 @@ function PlaceTetromino(grid, tetromino){
     }
 }
 
-// PlaceTetromino(grid, tetromino[1]);
-// console.log(grid);
+PlaceTetromino(grid, tetromino[1]);
+FallDown(grid);
+// Movement(grid, 'left')
+console.log(grid);
 
-// function MoveDown(arr) {
-//      let EmptyLine = false;
-//     for  (let row = arr.length-1; row >= 0 ; row--){
-//         for (let column = 0; column < arr[row].length; column++){
-//             if (arr[row][column] === 1){
-//                 // EmptyLine = true;
-//                 break;
-//             } else if (arr[row][column] === 0 && column === arr[row].length-1){
-//                 EmptyLine = true;
-//                 break;
-//             }
-//         }
-//         if (EmptyLine === true){
-//             arr.splice(row, 1);
-//             break;
-//         }
+// let okay = true;
 
-//     }
-// }
+function CheckDown(grid){
+    // let okay = true;
+    for (let r = grid.length-1; r >= 0; r--){
+        for (let c = 0; c < grid[r].length; c++){
+            if (grid[r][c] == 1){
+                if (grid[r+1][c] == 2){
+                    // okay = false;
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+
 
 
 
