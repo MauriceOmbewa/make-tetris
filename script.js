@@ -18,48 +18,39 @@ const tetrominoColor = [
     'orange'
 ]
 
-// console.log(arr);
-let num = RandomTetromino();
-// console.log(num)
-// // StartPosition(num);
-// console.log(tetromino[num].length)
-// console.log(Color(num))
-
 function RandomTetromino(){
     let num = 10;
     while(num > 5){
         num = Math.floor(Math.random()*10)
     }
-    // console.log(num);
     return num;
-}
-
-function StartPosition(num, arr, tetromino){
-    const tetrominoShape = tetromino[num];
-
-    for (let row = 0; row < tetrominoShape.legth; row++){
-        for (column = 0; column < tetrominoShape[row].length; column++){
-            arr[row][3 + column] = tetrominoShape[row][column];
-        }
-    }
 }
 
 function Color(num){
     return tetrominoColor[num];
 }
 
-// let arr5 = [
-//     [0, 0, 1, 1, 0],
-//     [0, 0, 1, 0, 0]
-// ]
+let grid = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
 
-// Movement(arr5, 'right')
 
 function  Movement(arr, direction, tetrominoShape){
     if (direction === 'left'){
         for (let row = 0; row < arr.length; row++){
             for (let index = 0; index < arr[row].length; index++){
                 if (arr[row][index] === 1){
+                    // if (arr[row][index-1] === 0 && index-1 >= 0){
+                    // }
                     arr[row][index-1] = 1
                     arr[row][index] = 0
                 }
@@ -81,9 +72,6 @@ function  Movement(arr, direction, tetrominoShape){
     }
 }
 
-// Rotation([ [ 1, 0 ], [ 1, 1 ], [ 1, 0 ] ])
-
-
 function Rotation(tetrominoShape) {
     let column = tetrominoShape[0].length;
     let finalarr = Array.from({length: column}, () => new Array(tetrominoShape.length).fill(0));
@@ -98,6 +86,41 @@ function Rotation(tetrominoShape) {
     return finalarr;
 }
 
+function PlaceTetromino(grid, tetromino){
+    let startcolumn = 4;
+    let startrow = 0;
+
+    for (let r = 0; r < tetromino.length; r++){
+        for (let c = 0; c < tetromino[r].length; c++){
+            if (tetromino[r][c] == 1){
+                grid[startrow+r][startcolumn+c] = 1;
+            }
+        }
+    }
+}
+
+// PlaceTetromino(grid, tetromino[1]);
+// console.log(grid);
+
+// function MoveDown(arr) {
+//      let EmptyLine = false;
+//     for  (let row = arr.length-1; row >= 0 ; row--){
+//         for (let column = 0; column < arr[row].length; column++){
+//             if (arr[row][column] === 1){
+//                 // EmptyLine = true;
+//                 break;
+//             } else if (arr[row][column] === 0 && column === arr[row].length-1){
+//                 EmptyLine = true;
+//                 break;
+//             }
+//         }
+//         if (EmptyLine === true){
+//             arr.splice(row, 1);
+//             break;
+//         }
+
+//     }
+// }
 
 
 
