@@ -163,6 +163,22 @@ function StackTetromino(grid){
     }
 }
 
+function CheckHorizontal(grid, direction){
+    for (let r = 0; r < grid.length; r++){
+        for (c = 0; c < grid[r].length; c++){
+            if (direction == 'left'){
+                if (grid[r][c] == 1 && c-1 >= 0 && grid[r][c-1] == 2){
+                    return false;
+                }
+            } else if (direction == 'right'){
+                if (grid[r][c] == 1 && c+1 < grid[r].length && grid[r][c+1] == 2){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
 
 
 
