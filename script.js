@@ -31,6 +31,8 @@ function Color(num){
 }
 
 let grid = [
+    [2, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+    [2, 2, 2, 0, 1, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -38,9 +40,7 @@ let grid = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 2, 2, 2, 2, 2, 2, 2, 2, 1]
+    [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 ]
 
 let t = [
@@ -63,12 +63,40 @@ function removeRows(grid, indexesToRemove) {
 let indexes = [4, 2];
 
 let updatedGrid = removeRows(t, indexes);
-console.log(updatedGrid);
+// console.log(updatedGrid);
+
+Rotation(grid);
+console.log(grid);
 
 
-function Rotation(tetrominoShape) {
+function Rotation(grid) {
+    let tetrominoShape = [];
+    let startRow = -1;
+    let startCol = -1;
+
+    // Find the tetromino in the grid
+    for (let r = 0; r < grid.length; r++) {
+        for (let c = 0; c < grid[r].length; c++) {
+            if (grid[r][c] === 1) {
+                if (startRow === -1) {
+                    startRow = r;
+                    startCol = c;
+                }
+                if (!tetrominoShape[r - startRow]) {
+                    tetrominoShape[r - startRow] = [];
+                }
+                tetrominoShape[r - startRow][c - startCol] = 1;
+            }
+        }
+    }
+
+    if (tetrominoShape.length === 0) {
+        return grid; // No tetromino found
+    }
+
+    // Rotate the tetromino shape
     let column = tetrominoShape[0].length;
-    let finalarr = Array.from({length: column}, () => new Array(tetrominoShape.length).fill(0));
+    let finalarr = Array.from({ length: column }, () => new Array(tetrominoShape.length).fill(0));
 
     for (let i = 0; i < tetrominoShape.length; i++) {
         for (let j = 0; j < column; j++) {
@@ -76,8 +104,34 @@ function Rotation(tetrominoShape) {
         }
     }
 
-    console.log(finalarr);
-    return finalarr;
+    // Check if the rotated tetromino can be placed in the grid
+    for (let r = 0; r < finalarr.length; r++) {
+        for (let c = 0; c < finalarr[r].length; c++) {
+            if (finalarr[r][c] === 1 && (startRow + r >= grid.length || startCol + c >= grid[0].length || grid[startRow + r][startCol + c] === 2)) {
+                return grid; // Cannot rotate due to collision or out of bounds
+            }
+        }
+    }
+
+    // Clear the original tetromino from the grid
+    for (let r = 0; r < grid.length; r++) {
+        for (let c = 0; c < grid[r].length; c++) {
+            if (grid[r][c] === 1) {
+                grid[r][c] = 0;
+            }
+        }
+    }
+
+    // Place the rotated tetromino back into the grid
+    for (let r = 0; r < finalarr.length; r++) {
+        for (let c = 0; c < finalarr[r].length; c++) {
+            if (finalarr[r][c] === 1) {
+                grid[startRow + r][startCol + c] = 1;
+            }
+        }
+    }
+
+    return grid;
 }
 
 function PlaceTetromino(grid, tetromino){
