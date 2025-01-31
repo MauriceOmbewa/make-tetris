@@ -66,34 +66,6 @@ let updatedGrid = removeRows(t, indexes);
 console.log(updatedGrid);
 
 
-function  Movement(arr, direction, tetrominoShape){
-    if (direction === 'left'){
-        for (let row = 0; row < arr.length; row++){
-            for (let index = 0; index < arr[row].length; index++){
-                if (arr[row][index] === 1){
-                    // if (arr[row][index-1] === 0 && index-1 >= 0){
-                    // }
-                    arr[row][index-1] = 1
-                    arr[row][index] = 0
-                }
-            }
-        }
-        console.log(arr)
-    } else if (direction === 'right'){
-        for (let row = 0; row < arr.length; row++){
-            for (let index = arr[row].length-1; index >= 0; index--){
-                if (arr[row][index] === 1){
-                    arr[row][index+1] = 1
-                    arr[row][index] = 0
-                }
-            }
-        }
-        console.log(arr)
-    } else if (direction === 'up'){
-        tetrominoShape = Rotation(tetrominoShape)
-    }
-}
-
 function Rotation(tetrominoShape) {
     let column = tetrominoShape[0].length;
     let finalarr = Array.from({length: column}, () => new Array(tetrominoShape.length).fill(0));
@@ -120,13 +92,6 @@ function PlaceTetromino(grid, tetromino){
         }
     }
 }
-
-PlaceTetromino(grid, tetromino[1]);
-// FallDown(grid);
-// Movement(grid, 'left')
-
-
-// let okay = true;
 
 function CheckDown(grid){
     // let okay = true;
@@ -202,24 +167,7 @@ function CheckHorizontal(grid, direction){
     return true;
 }
 
-// function CheckFullRows(grid, completeRows){
-//     let num = 0;
-//     for (r = grid.length-1; r >= 0; r--){
-//         for (c = 0; c < grid[r].length; c++){
-//             if (grid[r][c] !== 2){
-//                 break
-//             } else if (grid[r][c] == 2){
-//                 num = num + 2;
-//             }
-//         }
-//         if (num == 20){
-//             completeRows.push(r);
-//         }
-//         num = 0;
-//     }
-// }
-
-function CheckFullRows(grid){
+function CheckFullRows(grid, completeRows){
     let num = 0;
     for (r = grid.length-1; r >= 0; r--){
         for (c = 0; c < grid[r].length; c++){
@@ -230,10 +178,10 @@ function CheckFullRows(grid){
             }
         }
         if (num == 20){
-            return r;
+            completeRows.push(r);
         }
+        num = 0;
     }
-    return 'none';
 }
 
 function RemoveRows(grid, completeRowIndex){
@@ -258,44 +206,3 @@ function GameOver(grid, tetromino){
     return false
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// for (let row = 0; row < arr.length; row++){
-//     for (let index = 0; index < arr[row].length; index++){
-//         if (arr[row][index] === 1 && line === 0){
-//             // arr[row][index-1] = 1
-//             lines[line] = row
-//             line++
-//             break
-//         } else if (arr[row][index] === 1 && line === 1){
-//             lines[line] = row
-//             line++
-//             break
-//         }
-//     }
-// }
