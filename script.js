@@ -242,6 +242,10 @@ function RemoveRows(grid, completeRowIndex){
     });
 }
 
+function AddEmptyRows(grid, completeRowIndex){
+    let newRows = Array.from({length:completeRowIndex.length}, () => new Array(4).fill(0));
+    return newRows.concat(grid)
+}
 
 
 
