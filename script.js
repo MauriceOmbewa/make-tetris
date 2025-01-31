@@ -43,6 +43,28 @@ let grid = [
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 1]
 ]
 
+let t = [
+    [1, 1, 1, 1],
+    [2, 2, 2, 2],
+    [3, 3, 3, 3],
+    [4, 4, 4, 4],
+    [5, 5, 5, 5],
+    [6, 6, 6, 6]
+]
+
+// Here’s a function that efficiently removes multiple rows from the grid at once without looping and removing one by one. It reconstructs the grid by filtering out the unwanted rows.
+
+function removeRows(grid, indexesToRemove) {
+    // Create a new grid by filtering out rows that exist in indexesToRemove
+    let newGrid = grid.filter((_, index) => !indexesToRemove.includes(index));
+    return newGrid;
+}
+
+let indexes = [4, 2];
+
+let updatedGrid = removeRows(t, indexes);
+console.log(updatedGrid);
+
 
 function  Movement(arr, direction, tetrominoShape){
     if (direction === 'left'){
@@ -215,11 +237,11 @@ function CheckFullRows(grid){
 }
 
 function RemoveRows(grid, completeRowIndex){
-    grid.splice(completeRowIndex, 1);
-    grid.unshift(new Array(10).fill(0));
+    return grid.filter(function(element, index){
+        return !completeRowIndex.includes(index);
+    });
 }
 
-console.log(CheckFullRows(grid))
 
 
 
