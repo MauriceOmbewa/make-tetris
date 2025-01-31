@@ -2,7 +2,7 @@ const length = 20;
 const width = 10;
 let arr = Array.from({length: length}, () => new Array(width).fill(0))
 const tetromino = [
-    [[1,1,1]],//_
+    [[1,1,1,1]],//_
     [[0,0,1], [1,1,1]],//l
     [[1,0,0], [1,1,1]],//j orange
     [[1,1,0], [0,1,1]],//z
@@ -247,6 +247,16 @@ function AddEmptyRows(grid, completeRowIndex){
     return newRows.concat(grid)
 }
 
+function GameOver(grid, tetromino){
+    for (let r = 0; r < tetromino.length; r++){
+        for (let c = 0; c < tetromino.length; c++){
+            if (grid[r][c+3] == 2){
+                return true
+            }
+        }
+    }
+    return false
+}
 
 
 
