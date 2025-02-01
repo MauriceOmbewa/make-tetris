@@ -69,6 +69,33 @@ Rotation(grid);
 console.log(grid);
 
 
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft'){
+        if (CheckHorizontal(grid, 'left') == true){
+            MoveLeft(grid);
+            RenderGrid(grid);
+        }
+    } else if (event.key === 'ArrowRight'){
+        if (CheckHorizontal(grid, 'right') == true){
+            MoveRight(grid);
+            RenderGrid(grid);
+        }
+    } else if (event.key === 'ArrowUp'){
+        Rotation(grid);
+        RenderGrid(grid);
+    } else if (event.key === 'ArrowDown'){
+        if (CheckDown(grid) == true){
+            MoveDown(grid);
+            RenderGrid(grid);
+        } else {
+            StackTetromino(grid);
+            RenderGrid(grid);
+        }
+    }
+});
+
+
 function Rotation(grid) {
     let tetrominoShape = [];
     let startRow = -1;
