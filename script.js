@@ -20,9 +20,16 @@ const tetrominoColor = [
 let score = 0;
 let currentTetromino = null;
 let nextTetromino = tetromino[RandomTetromino()];
+ let level = 1;
+ let baseInterval = 1000;
+ let timeInterval = baseInterval;
+ let interval;
 
 const gridElement = document.getElementById('grid');
 const scoreElement = document.getElementById('score');
+const levelElement = document.createElement('div');
+levelElement.id = 'level';
+scoreElement.parentNode.insertBefore(levelElement, scoreElement.nextSibling);
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') {
@@ -69,14 +76,15 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+// Modified GameLoop function
 function GameLoop() {
     if (!currentTetromino) {
-        let num = RandomTetromino()
+        let num = RandomTetromino();
         currentTetromino = {
             shape: tetromino[num],
             color: tetrominoColor[num],
             row: 0,
-            col: Math.floor((width - tetromino[0].length) / 2) // Center the tetromino
+            col: Math.floor((width - tetromino[0].length) / 2)
         };
         PlaceTetromino(grid, currentTetromino);
     }
@@ -92,12 +100,13 @@ function GameLoop() {
             grid = RemoveRows(grid, completeRows);
             grid = AddEmptyRows(grid, completeRows);
             score += completeRows.length * 100;
-            scoreElement.textContent = `Score: ${score}`;
+            checkLevelUp();
+            updateGameInfo();
         }
 
         if (GameOver(grid, currentTetromino.shape)) {
             clearInterval(interval);
-            alert(`Game Over! Your score: ${score}`);
+            alert(`Game Over!\nFinal Score: ${score}\nLevel Reached: ${level}`);
             return;
         }
 
@@ -107,7 +116,54 @@ function GameLoop() {
     RenderGrid(grid);
 }
 
-const interval = setInterval(GameLoop, 1000);
+
+// Start the game
+updateGameInfo();
+interval = setInterval(GameLoop, timeInterval);
+console.log(`Game started at level ${level} with interval ${timeInterval}ms`);
+
+
+// Update game info display
+function updateGameInfo() {
+    scoreElement.textContent = `Score: ${score}`;
+    levelElement.textContent = `Level: ${level}`;
+}
+
+// Check and handle level up
+function checkLevelUp() {
+    const newLevel = Math.floor(score / 1000) + 1;
+    if (newLevel !== level) {
+        level = newLevel;
+        timeInterval = baseInterval / Math.pow(2, level - 1); // Halve the interval for each level
+        
+        // Reset the game loop with new interval
+        clearInterval(interval);
+        interval = setInterval(GameLoop, timeInterval);
+        
+        // Visual feedback for level up
+        levelElement.style.animation = 'levelUp 1s';
+        setTimeout(() => {
+            levelElement.style.animation = '';
+        }, 1000);
+        
+        console.log(`Level up! Now at level ${level} with interval ${timeInterval}ms`);
+    }
+}
+
+// Add CSS for level up animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes levelUp {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.5); color: gold; }
+        100% { transform: scale(1); }
+    }
+    #level {
+        font-size: 24px;
+        margin: 10px 0;
+    }
+`;
+document.head.appendChild(style);
 
 function RandomTetromino() {
     return Math.floor(Math.random() * tetromino.length);
